@@ -23,29 +23,14 @@
      />
 
     </head>
-    <body>
-        <header>
-            <a href="daily.html">
-              <button class="header-buttons"  >Daily</button>
-            </a>
-            <a href="personal.html">
-              <button class="header-buttons">Personal</button>
-            </a>
-            <a href="home.html">
-              <button class="header-buttons">Home</button>
-            </a>
-            <a href="school.html">
-              <button class="header-buttons">School</button>
-            </a>
-    
-        </header>
+    <body onload="updateList();">
 
         <div class="container">
             <h2 id="header">To Do List</h2>
             <input
               type="text"
               name="task"
-              placeholder="Type in a task and it will appear here!"
+              placeholder="Type in a task and it will appear below!"
             />
             <button id="add-btn">ADD</button>
             <ul id="taskList"></ul>

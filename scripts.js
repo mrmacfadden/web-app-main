@@ -1,92 +1,52 @@
-const tasks = [];
+// Initialize tasks array with stored tasks from local storage or empty array
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+// Retrieve tasks from local storage on page load
+document.addEventListener("DOMContentLoaded", () => {
+    // Display tasks from the tasks array
+    updateList();
+});
+
 const unordered_list = document.getElementById("taskList");
 const input = document.querySelector("input");
 const button = document.getElementById("add-btn");
 
 function createDeleteButton(index) {
-  const deleteButton = document.createElement("button");
-  deleteButton.textContent = "Delete";
-  deleteButton.classList.add("delete-button");
-  deleteButton.addEventListener("click", () => {
-    tasks.splice(index, 1);
-    updateList();
-  });
-  return deleteButton;
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.classList.add("delete-button");
+    deleteButton.addEventListener("click", () => {
+        tasks.splice(index, 1);
+        updateList();
+        saveTasksToLocalStorage(); // Update local storage after deletion
+    });
+    return deleteButton;
 }
 
 function updateList() {
-  unordered_list.innerHTML = "";
-  for (let i = 0; i < tasks.length; i++) {
-    const li = document.createElement("li");
-    li.innerHTML = tasks[i];
+    unordered_list.innerHTML = ""; // Clear the list before re-rendering
 
-    const deleteButton = createDeleteButton(i);
-    li.appendChild(deleteButton);
+    tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        li.textContent = task;
 
-    unordered_list.appendChild(li);
-  }
+        const deleteButton = createDeleteButton(index);
+        li.appendChild(deleteButton);
+
+        unordered_list.appendChild(li);
+    });
+}
+
+function saveTasksToLocalStorage() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 button.addEventListener("click", () => {
-  const task = input.value.trim();
-  if (task !== "") {
-    tasks.push(task);
-    input.value = "";
-    updateList();
-  }
+    const task = input.value.trim();
+    if (task !== "") {
+        tasks.push(task); // Add new task to the tasks array
+        input.value = "";
+        updateList(); // Update the list with the new task
+        saveTasksToLocalStorage(); // Update local storage after adding task
+    }
 });
-
-updateList();
- 
-var loader = document.getElementById("preloader");
-
-window.addEventListener("load" , function(){
-loader.style.display = "none"
-})
-localStorage.setItem("lastname", "Smith");
-localStorage.getItem("lastname");
-
-
-/*const tasks = [];
-      const unordered_list = document.getElementById("taskList");
-      const input = document.querySelector("input");
-      const button = document.getElementById("add-btn");
-
-      function createDeleteButton(index) {
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.classList.add("delete-button");
-        deleteButton.addEventListener("click", () => {
-          tasks.splice(index, 1);
-          updateList();
-        });
-        return deleteButton;
-      }
-
-      function updateList() {
-        unordered_list.innerHTML = "";
-        for (let i = 0; i < tasks.length; i++) {
-          const li = document.createElement("li");
-          li.innerHTML = tasks[i];
-
-          const deleteButton = createDeleteButton(i);
-          li.appendChild(deleteButton);
-
-          unordered_list.appendChild(li);
-        }
-      }
-
-      button.addEventListener("click", () => {
-        const task = input.value.trim();
-        if (task !== "") {
-          tasks.push(task);
-          input.value = "";
-          updateList();
-        }
-      });
-
-      updateList();
-
-
-*/
-      
